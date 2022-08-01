@@ -96,7 +96,7 @@ contract Diamond {
         facetStruct[_facet]._facetAddress = _facet;
         /// @dev Push the selector to the array at Facet struct.
         facetStruct[_facet]._facetSelectors.push(_selector);
-        /// @dev Contiue......
+        /// @dev Continue......
     }
 
     /**
