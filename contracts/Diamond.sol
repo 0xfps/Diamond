@@ -35,10 +35,35 @@ contract Diamond {
     bytes4[] private selectorArray;
     /// @dev    Create a mapping of function selectors to the
     ///         Facet addresses.
-    mapping(bytes4 => address) private facetSelectorMap;
+    mapping(bytes4 => address) private selectorToFacetMap;
     /// @dev Struct of each individual Facet and their selectors.
     struct Facets {
+        /// @dev Facet address.
         address _facetAddress;
+        /// @dev Array of selectors in the Facet address.
         bytes4[] _facetSelectors;
     }
+
+    /// @dev Emitted when a new Facet selector is added.
+    event AddNewFacetSelector(
+        address indexed _facetAddress, 
+        bytes4 indexed _selector
+    );
+    /// @dev Emitted when a Facet selector is removed or deleted.
+    event RemoveFacetSelector(
+        address indexed _facetAddress, 
+        bytes4 indexed _selector
+    );
+    /// @dev    In rare cases, this will be emitted when a large number
+    ///         of Facet selectors are added.
+    event AddArrayOfNewFacetSelectors(
+        address indexed _facetAddress, 
+        bytes4[] indexed _selector
+    );
+    /// @dev    Also, in rare cases, this will be emitted when a large 
+    ///         number of Facet selectors are removed.
+    event RemoveArrayOfNewFacetSelectors(
+        address indexed _facetAddress, 
+        bytes4[] indexed _selector
+    );
 }
