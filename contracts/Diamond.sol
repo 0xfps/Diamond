@@ -127,6 +127,25 @@ contract Diamond {
     }
 
     /**
+    * @dev Adds using the Addition Facet.
+    *
+    * @param _a First number.
+    * @param _b Second number.
+    */
+    function add(uint256 _a, uint256 _b) public{
+        bytes4 _s = bytes4(abi.encodeWithSignature("add(uint256,uint256)"));
+        require(selectorExists(_s), "Inexistent Selector.");
+        (bool sent, bytes memory data) = selectorToFacetMap[_s].delegatecall(
+            abi.encodeWithSelector(
+                _s,
+                _a,
+                _b
+            )
+        );
+        require(sent, "Not Sent.");
+    }
+
+    /**
     * @dev Returns true if the `_selector` exists and is owned by `_facet`.
     *
     * @param _selector  Selector of function to be called.
