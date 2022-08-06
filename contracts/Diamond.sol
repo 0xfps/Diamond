@@ -29,6 +29,8 @@ pragma solidity ^0.8.14;
 *           be clobbered when we add a new Facet.
 */
 contract Diamond {
+    /// @dev Test number storage.
+    uint256 public testTotal;
     /// @dev Number of selectors registered in the Diamond.
     uint256 private selectorCount;
     /// @dev Array of all function selectors used.
@@ -132,18 +134,43 @@ contract Diamond {
     * @param _a First number.
     * @param _b Second number.
     */
-    function add(uint256 _a, uint256 _b) public{
+    function add(uint256 _a, uint256 _b) public {
+        /// @dev Get selector.
         bytes4 _s = bytes4(abi.encodeWithSignature("add(uint256,uint256)"));
+        /// @dev Require selector exists.
         require(selectorExists(_s), "Inexistent Selector.");
-        (bool sent, bytes memory data) = selectorToFacetMap[_s].delegatecall(
+        /// @dev Delegate call to facet that owns selector.
+        (bool sent, ) = selectorToFacetMap[_s].delegatecall(
             abi.encodeWithSelector(
                 _s,
                 _a,
                 _b
             )
         );
+        /// @dev Require it was sent.
         require(sent, "Not Sent.");
+        /// @dev Call the get total function.
+        testTotal = seeTotal();
     }
+
+    function seeTotal() private returns(uint256) {
+        /// @dev Get selector.
+        bytes4 _s = bytes4(abi.encodeWithSignature("returnTotal()"));
+        /// @dev Require selector exists.
+        require(selectorExists(_s), "Inexistent Selector.");
+        /// @dev Delegate call to facet that owns selector.
+        (bool sent, bytes memory data) = selectorToFacetMap[_s].delegatecall(
+            abi.encodeWithSelector(
+                _s
+            )
+        );
+        /// @dev Require it was sent.
+        require(sent, "Not Sent.");
+        /// @dev Return decoded function.
+        return abi.decode(data, (uint256));
+    }
+
+    
 
     /**
     * @dev Returns true if the `_selector` exists and is owned by `_facet`.
