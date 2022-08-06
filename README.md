@@ -23,6 +23,7 @@ Because, if we used a contract, we cannot explicitly interact with it, unless we
 ## STEPS
 
 - Deploy `facets/AdditionFacet.sol`.
+- Deploy `Diamond.sol`.
 - Get selectors using `getAddHash` and `getReturnTotalHash` or simply copy `"add(uint256,uint256)"` and `"returnTotal()"`.
 - Set the selectors in the `Diamond.sol` using the `addFunctionBySelector` or `addFunctionByString`.
 - > Set the `"add(uint256,uint256)"` and `"returnTotal()"`.
