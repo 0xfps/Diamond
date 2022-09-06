@@ -2,7 +2,7 @@
 
 ### EIP-2535
 
-An practical outlook into the Diamond contract structure.
+A practical outlook into the Diamond contract structure.
 
 <br/>
 
