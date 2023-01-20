@@ -32,11 +32,11 @@ library AdditionStorage {
         uint256 total;
     }
 
-    /// @dev    Returns assigns the Numbers struct to a location and returns
+    /// @dev    Assigns the Numbers struct to a location and returns
     ///         the struct at that location.
     /// @return nm Numbers struct at location.
     function myStorage() private pure returns(Numbers storage nm) {
-        /// @dev Move LOCATION to storage.
+        /// @dev Move LOCATION to memory.
         bytes32 location = LOCATION;
 
         // Assembly starts here.
